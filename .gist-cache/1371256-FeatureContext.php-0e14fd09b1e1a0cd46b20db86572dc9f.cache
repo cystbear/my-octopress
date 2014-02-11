@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @Given /^I logged in as "([^"]*)" with "([^"]*)" password$/
+ */
+public function iLoggedInAsWithPassword($username, $password)
+{
+   return array(
+       new Step\Given("I am on \"/login\""),
+       new Step\When("I fill in \"Username\" with \"$username\""),
+       new Step\When("I fill in \"Password\" with \"$password\""),
+       new Step\When("I press \"Login\""),
+       new Step\Then("I should be on \"/home\""),
+   );
+}

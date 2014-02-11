@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Symfony2 adept thoughts]]></title>
+  <link href="http://cystbear.github.io/atom.xml" rel="self"/>
+  <link href="http://cystbear.github.io/"/>
+  <updated>2014-01-08T16:51:20+02:00</updated>
+  <id>http://cystbear.github.io/</id>
+  <author>
+    <name><![CDATA[Oleg Zinchenko]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Patterns And Approaches]]></title>
+    <link href="http://cystbear.github.io/blog/2012/01/21/Patterns-and-Approaches/"/>
+    <updated>2012-01-21T00:00:00+02:00</updated>
+    <id>http://cystbear.github.io/blog/2012/01/21/Patterns-and-Approaches</id>
+    <content type="html"><![CDATA[<p>I am member of <a href="https://www.exercise.com/">Exercise.com</a> team. We are building our awesome web-application using cutting-edge technologies such as Symfony2, Doctirne2, Twig etc.</p>
+
+<!-- more -->
+
+
+<p>This is fortunate use latest trends in you sphere (PHP for me). As said my old friend Thibault Duplessis, also known as <a href="https://twitter.com/ornicar">@ornicar</a>: &ldquo;We are code warriors.&rdquo; This libs provide deadly simple and clear API to use them, but sometimes I feel like a user in our complex application. I exactly know how to do this or that feature, but not always know how it works under the hood.</p>
+
+<p>Doctrine2.</p>
+
+<p>As doc said it based on several patterns: DataMapper, UnitOfWork, Repository.
+Time by time I have reviewed doctrine code to understand some logic or flow, but it&rsquo;s only occasionally.
+Before dive deeper into doctine, and probably send any PR or write extension, you should at least understand base patterns on which it based.</p>
+
+<p>I have asked bible of patterns <a href="http://www.amazon.com/dp/0201633612/">GoF &mdash; Design Patterns</a>, but not luck, I have found nothing similar to DataMapper, UnitOfWork or Repository.</p>
+
+<p>In few minutes I have found next awesome book, that I want to advice to you, it&rsquo;s <a href="http://www.amazon.com/dp/0321127420/">Patterns of Enterprise Application Architecture</a> by Martin Fowler. It describes, as far as I got, not patterns but, probably, approaches. Despite title Patterns of Enterprise blah-blah&hellip; you can, and I highly recommend to you, use described approaches in you daily work.</p>
+
+<p>There is list of approaches described in book (alphabetical order).
+I have marked doctrine related approaches via bold:</p>
+
+<ul>
+<li>Active Record</li>
+<li>Application Controller</li>
+<li>Association Table Mapping</li>
+<li>Class Table Inheritance</li>
+<li>Client Session State</li>
+<li>Coarse-Grained Lock</li>
+<li>Concrete Table Inheritance</li>
+<li><strong>Data Mapper</strong></li>
+<li>Data Transfer Object</li>
+<li>Database Session State</li>
+<li>Dependent Mapping</li>
+<li><strong>Domain Model</strong></li>
+<li>Embedded Value</li>
+<li>Foreign Key Mapping</li>
+<li>Front Controller</li>
+<li>Gateway</li>
+<li>Identity Field</li>
+<li><strong>Identity Map</strong></li>
+<li>Implicit Lock</li>
+<li>Inheritance Mappers</li>
+<li>Layer Supertype</li>
+<li>Lazy Load</li>
+<li>Mapper</li>
+<li>Metadata Mapping</li>
+<li>Model View Controller</li>
+<li>Money</li>
+<li>Optimistic Offline Lock</li>
+<li>Page Controller</li>
+<li>Pessimistic Offline Lock</li>
+<li>Plugin</li>
+<li>Query Object</li>
+<li>Record Set</li>
+<li>Registry</li>
+<li>Remote Facade</li>
+<li><strong>Repository</strong></li>
+<li>Row Data Gateway</li>
+<li>Separated Interface</li>
+<li>Serialized LOB</li>
+<li>Server Session State</li>
+<li>Service Layer</li>
+<li>Service Stub</li>
+<li>Single Table Inheritance</li>
+<li>Special Case</li>
+<li>Table Data Gateway</li>
+<li>Table Module</li>
+<li>Template View</li>
+<li>Transaction Script</li>
+<li>Transform View</li>
+<li>Two Step View</li>
+<li><strong>Unit of Work</strong></li>
+<li>Value Object</li>
+</ul>
+
+
+<p>Good luck with patterns!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Behat Meta Steps Awesome Feature]]></title>
+    <link href="http://cystbear.github.io/blog/2011/11/15/Behat-meta-steps-awesome-feature/"/>
+    <updated>2011-11-15T00:00:00+02:00</updated>
+    <id>http://cystbear.github.io/blog/2011/11/15/Behat-meta-steps-awesome-feature</id>
+    <content type="html"><![CDATA[<p>Hello guys, let me show you how to prepare Behat meta step.</p>
+
+<p>For example, you need start each your scenario form one entry point &ndash; logged in as specific user and located at homepage.</p>
+
+<!-- more -->
+
+
+<p>In this case you will need start each your scenario like this:</p>
+
+<div><script src='https://gist.github.com/1371256.js?file=myScenario.feature'></script>
+<noscript><pre><code>Scenario: Test my feature
+  Given I am on &quot;/login&quot;
+  When I fill in &quot;Username&quot; with &quot;admin&quot;
+  And I fill in &quot;Password&quot; with &quot;admin&quot;
+  And I press &quot;Login&quot;
+  And I should be on &quot;/home&quot;
+  And I go to &quot;/feature-page&quot; # your start your real steps here
+  And ...
+  And ...
+  Then ...
+  And ...
+  And ...</code></pre></noscript></div>
+
+
+<p>Let`s hide all login steps to meta step.</p>
+
+<p>Add to your FeatureContext</p>
+
+<div><script src='https://gist.github.com/1371256.js?file=FeatureContext.php'></script>
+<noscript><pre><code>&lt;?php
+
+/**
+ * @Given /^I logged in as &quot;([^&quot;]*)&quot; with &quot;([^&quot;]*)&quot; password$/
+ */
+public function iLoggedInAsWithPassword($username, $password)
+{
+   return array(
+       new Step\Given(&quot;I am on \&quot;/login\&quot;&quot;),
+       new Step\When(&quot;I fill in \&quot;Username\&quot; with \&quot;$username\&quot;&quot;),
+       new Step\When(&quot;I fill in \&quot;Password\&quot; with \&quot;$password\&quot;&quot;),
+       new Step\When(&quot;I press \&quot;Login\&quot;&quot;),
+       new Step\Then(&quot;I should be on \&quot;/home\&quot;&quot;),
+   );
+}</code></pre></noscript></div>
+
+
+<p>now you can use it at your feature definition.</p>
+
+<div><script src='https://gist.github.com/1371256.js?file=myScenarioImproved.feature'></script>
+<noscript><pre><code>Scenario: Test my feature
+  Given I logged in as &quot;admin&quot; with &quot;admin&quot; password
+  When I go to &quot;/feature-page&quot; # your start your real steps here
+  And ...
+  Then ...
+  And ...</code></pre></noscript></div>
+
+
+<p>Much better now!</p>
+]]></content>
+  </entry>
+  
+</feed>
